@@ -7,12 +7,12 @@ import {
   UserIcon,
   VercelIcon,
 } from "@/components/icons";
-import { useChat } from "ai/react";
-import { DragEvent, useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
-import { toast } from "sonner";
-import Link from "next/link";
 import { Markdown } from "@/components/markdown";
+import { useChat } from "ai/react";
+import { AnimatePresence, motion } from "framer-motion";
+import Link from "next/link";
+import { DragEvent, useEffect, useRef, useState } from "react";
+import { toast } from "sonner";
 
 const getTextFromDataUrl = (dataUrl: string) => {
   const base64 = dataUrl.split(",")[1];
@@ -41,10 +41,7 @@ function TextFilePreview({ file }: { file: File }) {
 
 export default function Home() {
   const { messages, input, handleSubmit, handleInputChange, isLoading } =
-    useChat({
-      onError: () =>
-        toast.error("You've been rate limited, please try again later!"),
-    });
+    useChat();
 
   const [files, setFiles] = useState<FileList | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -172,9 +169,8 @@ export default function Home() {
             {messages.map((message, index) => (
               <motion.div
                 key={message.id}
-                className={`flex flex-row gap-2 px-4 w-full md:w-[500px] md:px-0 ${
-                  index === 0 ? "pt-20" : ""
-                }`}
+                className={`flex flex-row gap-2 px-4 w-full md:w-[500px] md:px-0 ${index === 0 ? "pt-20" : ""
+                  }`}
                 initial={{ y: 5, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
               >
